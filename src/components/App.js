@@ -2,6 +2,12 @@
 // Step 2: Import render from react-dom
 // Step 3: Import MoviesList from MoviesList
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import MoviesList from './MoviesList.js';
+import AddMovie from './AddMovie.js';
+
 // Step 4: Write a class called App, extending Component.
   // Step 5: Write a constructor function without passing anything into it.
     // Step 6: Inside the constructor function, call super without passing anything into it.
@@ -10,5 +16,55 @@
   // Step 9: Write a render function.
     // Step 10: Inside the render function, write a return statement.
       // Step 11: Inside the return statement, write a selfclosing tag called MoviesList
-        // Step 12: Inside the selfclosing tag, give it an attribute called movies, and pass it this.state.movies inside a set of curly bracket. 
-// Step 13: Outside the class, export the App class as a default. 
+        // Step 12: Inside the selfclosing tag, give it an attribute called movies, and pass it this.state.movies inside a set of curly bracket.
+// Step 13: Outside the class, export the App class as a default.
+
+class App extends React.Component {
+  constructor () {
+    super();
+    this.state = {
+      movies: ["Hello", "World"],
+      newMovie: ''
+    };
+    // this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  // addMovie(e) {
+  //
+  //
+  //
+  //
+  //   console.log(title);
+  //   prevMovies.push(this.state.new)
+  //
+  //
+  //
+  //
+  // }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    let title = e.target.movieTitle.value;
+    this.state.movies.push(title);
+    let newMovies = this.state.movies;
+
+    if (title) {
+      e.target.movieTitle.value = '';
+    }
+
+    this.setState({movies: newMovies});
+  }
+  render () {
+    return (
+      <div>
+        <MoviesList movies={this.state.movies}/>
+        <form onSubmit={this.handleSubmit.bind(this)}>
+          <input name="movieTitle" placeholder="Enter movie title" type="text"/>
+          <button>Add Movie</button>
+        </form>
+      </div>
+
+    );
+  }
+}
+
+export default App;
